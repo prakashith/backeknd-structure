@@ -12,9 +12,7 @@ const commonVariables = {
     SERVICE_RPC_PORT: '8500',
     CORE_USER_PORT: '8500',
     DB_ENV: 'development',
-    pageLimit: 10,
-    trendingRoomLimit: 4
-    
+    pageLimit: 10
 }
 
 //setting the common variables

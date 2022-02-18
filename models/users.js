@@ -35,11 +35,7 @@ let userSchema = new Schema({
         city: String,
         state: String,
         pincode: String,
-        profilePicture: String,
-        clientUser:{
-            uid: Number,
-            token: String
-        }
+        profilePicture: String
     },
     emailVerified: {type: Boolean, default: false},
     isActive:{type:Boolean, default: false},

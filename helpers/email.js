@@ -36,7 +36,7 @@ exports.sendAuthOtp = function(data, response, cb) {
     let generatedOTP = data.otp
     var hostUrl = process.env.EMAIL_HOST
   
-    let subject = `2FA OTP ${projectName}`;
+    let subject = `OTP ${projectName}`;
     let from = process.env.EMAIL_HOST;
     let to = `${user.email}`;
     let message = `${hostUrl}, email:${user.email}, otp:${generatedOTP}`

@@ -1,15 +1,16 @@
-process.env.NODE_ENV = "development"
+if(!process.env.NODE_ENV){
+  process.env.NODE_ENV = "development"
+}
 
 // Required Files to make default Connection
 require('./config/index');
 require('./models/db');
-// require('./models/graphdb');
 require('./server');
+require('./helpers/social');
 
 //Required Modules for framework connection
 const express = require('express');
 const expressSession = require('express-session');
-
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 const bodyParser = require('body-parser');
@@ -17,11 +18,10 @@ const device = require('express-device');
 const helmet = require('helmet');
 const cors = require('cors');
 const passport = require('passport');
-const passportSocialSetup = require('./helpers/social');
-
 
 
 let app = express();
+
 // use passport session
 app.use(passport.initialize());
 app.use(passport.session());
@@ -31,7 +31,9 @@ app.use(expressSession({
   saveUninitialized: true
 }));
 
-let swagger = require('swagger-node-express').createNew(app);
+// Declaring Swagger and binding swagger doc
+require('swagger-node-express').setAppHandler(app);
+
 // All domain list which can access this backend server
 var whitelistOrigin = [
     'http://localhost:4200',
@@ -60,15 +62,6 @@ app.use('/auth', auth);
 
 
 app.use(express.static('apiDoc'));
-
-swagger.setApiInfo({
-  title: "Backend API",
-  description: "All API divided into groups as per there functionality."
-});
-
-app.get('/api', function (req, res) {
-  res.sendFile(__dirname + '/apiDoc/index.html');
-});
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {

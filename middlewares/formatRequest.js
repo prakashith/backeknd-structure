@@ -9,20 +9,9 @@
 // }).catch((error) => {
 //     console.error(error);
 // });
-// const formidable = require('formidable');
-// const form = new formidable.IncomingForm();
-
 
 module.exports = async function(req, res, next) {
     
-    // let recievedfiles = await form.parse(req, function(err, fields, files) {
-    //     if (err) {
-    //       // Check for and handle any errors here.
-    //       console.error('Form parse upload',err.message);
-    //       return null
-    //     }
-    //     return files
-    // })
     req.data = {};
     req.data.signature = gensig();
     req.data.request = {
@@ -41,7 +30,6 @@ module.exports = async function(req, res, next) {
         protocol: req.protocol,
         originalUrl: req.originalUrl,
         route: req.route,
-        // files: recievedfiles.openedFiles,
         headers: req.headers
     }
     // req.data.auth = {
