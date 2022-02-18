@@ -216,12 +216,12 @@ router.get('/v1/google/callback', passport.authenticate('google', { failureRedir
             if (err) {
                 console.log(err);
                 status = err.status;
-                // return res.status(status).send(response);
-                return res.redirect(`${process.env.CLIENT_URL}/auth/social/${btoa(JSON.stringify(err))}`);
+                return res.status(status).send(response);
+                // return res.redirect(`${process.env.CLIENT_URL}/auth/social/${btoa(JSON.stringify(err))}`);
             }
             status = response.status;
-            // return res.status(status).send(response);
-            return res.redirect(`${process.env.CLIENT_URL}/auth/social/${btoa(JSON.stringify(response))}`);
+            return res.status(status).send(response);
+            // return res.redirect(`${process.env.CLIENT_URL}/auth/social/${btoa(JSON.stringify(response))}`);
             
         });
 })
