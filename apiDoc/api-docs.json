@@ -1,0 +1,124 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "version": "1.0",
+    "title": "Core Backend",
+    "description": "",
+    "contact": {}
+  },
+  "host": "localhost:8000",
+  "basePath": "/",
+  "schemes": [
+    "http",
+    "https"
+  ],
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "paths":{
+    "/auth/v1/test": {
+      "post": {
+        "description": "",
+        "summary": "test",
+        "tags": [
+          "auth"
+        ],
+        "operationId": "test",
+        "deprecated": false,
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "Body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/testRequest"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+        "description": "",
+        "schema": {
+          "type": "object",
+          "$ref": "#/definitions/testResponse"
+        },
+        "headers": {}
+      },
+    "500": {
+    "description": "",
+    "schema": {
+      "type": "object",
+      "$ref": "#/definitions/somethingWentWrong"
+    },
+    "headers": {}
+    },
+    "401":{
+        "description":"",
+        "schema":{
+        "$ref":"#/definitions/notallowed"
+        }
+    },
+    "400":{
+        "description":"",
+        "schema":{
+        "$ref":"#/definitions/missingparams"
+        }
+    }
+        }
+      }
+    }
+  },
+  "definitions":{
+    "testRequest": {
+      "title": "testRequest",
+      "example": {
+        "email": "userOne@ith.tech"
+      },
+      "type": "object",
+      "properties": {
+        "email": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "email"
+      ]
+    },
+    "somethingWentWrong":{
+      "title": "somethingWentWrong",
+      "example": {
+        "status": 500,
+        "message": "Something went wrong.",
+        "error": true
+      }
+    },
+    "notallowed":{
+      "title": "notallowed",
+      "example": {
+          "status": 401,
+          "message": "Not Allowed.",
+          "error": true
+      }
+    },
+    "missingparams":{
+      "title": "missingparams",
+      "example": {
+          "status": 400,
+          "message": "Missing Params.",
+          "error": true
+      }
+    }
+  },
+  "tags":[
+    {
+      "name": "auth",
+      "description": "API for login and signup"
+    }
+  ]
+}
