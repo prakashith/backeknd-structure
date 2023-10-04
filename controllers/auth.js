@@ -15,6 +15,7 @@ const LoginStats = require('../models/loginStats');
 
 // Helpers Service
 const utilities = require('../helpers/security');
+
 const responseUtilities = require('../helpers/sendResponse');
 // const email = require('../helpers/email');
 
@@ -25,7 +26,7 @@ exports.userRegistry = function (data, response, cb) {
         cb = response;
     }
     if (!data.email) {
-        return cb(sendResponse(400, "Email Missing", "userRegistry",null, data.req.signature));    
+        return cb(responseUtilities.sendResponse(400, "Email Missing", "userRegistry",null, data.req.signature));    
     }
 
     Users.findOne({email:data.email},(err,res)=>{
