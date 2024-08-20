@@ -513,33 +513,30 @@ const checkUserName = function (data, response, cb) {
 
 exports.checkUserName = checkUserName
 
-const generateAccountId = function (data, response, cb) {
+const generateAccountId = async function (data, response, cb) {
     if (!cb) {
         cb = response;
     }
 
     let forwardData 
+    
     if (response) {
         forwardData = response;
     }
 
-    Users.find({ accountId: 1 }, function (err, usedAccountIds) {
-        if (err) {
-            console.error(err)
-            return cb(responseUtilities.responseStruct(500, null, "generateAccountId", data.req.signature));
+    let accountId = 0;
+    while (true) {
+        accountId = Math.floor(Math.random() * (99999999 - 11111111) + 11111111);
+        let fetchAccountId = await  Users.findOne({ accountId: accountId });
+        if(!fetchAccountId){
+            break;
         }
-        let usedList = usedAccountIds;
-        let x = true;
-        let accountId = 0;
-        while (x) {
-            accountId = Math.floor(Math.random() * (99999999 - 11111111) + 11111111);
-            if (usedList.indexOf(accountId) < 0) {
-                x = false;
-            }
-        }
-        forwardData.accountId = accountId;
-        return cb(null, responseUtilities.responseStruct(200, null, "generateAccountId", forwardData, data.req.signature));
-    })
+    }        
+    forwardData.accountId = accountId;
+
+    return cb(null, responseUtilities.responseStruct(200, null, "generateAccountId", forwardData, data.req.signature));
+
+    
 };
 
 const insertUser = function (data, response, cb) {
